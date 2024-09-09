@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+  <title>TripWithMe 페이지</title>
+
+  <link th:href="@{/css/board_msy.css}" rel="stylesheet"/>
+  <link th:href="@{/css/common_msy.css}" rel="stylesheet">
+<!--  <link th:href="@{/css/swiper-min.css}" rel="stylesheet">-->
+<!--  <link th:href="@{/css/style.css}" rel="stylesheet">-->
+<!--  <link th:href="@{/css/slick.css}" rel="stylesheet">-->
+  <script th:src="@{/js/html5.js}"></script>
+  <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+  <script th:src="@{/js/slick.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div style="display: flex; justify-content: center;">
+    <div class="content-container">
+      <div class="header-container">
+        <a href="/boards"><button class="btn">전체보기</button></a>
+        <h1>상세페이지</h1>
+      </div>
+
+      <div class="content-section">
+        <p><strong>제목:</strong> <span th:text="${board.title}"></span></p>
+        <p><strong>글쓴이:</strong> <span th:text="${board.writer}"></span></p>
+        <p><strong>내용:</strong></p>
+        <pre th:text="${board.boardContent}"></pre>
+
+        <div class="item-file" th:if="${board.filename != null}">
+          첨부 파일:
+          <a class="file-link" th:href="@{/files/{filename}(filename=${board.filename})}" th:text="${board.filename}"></a>
+          <br />
+          <img class="file-image" th:src="@{/files/{filename}(filename=${board.filename})}" alt="Attached image" />
+        </div>
+
+        <div class="date-info">
+          작성시간: <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </div>
+        <div th:if="${board.modifyDate != null}" class="date-info">
+          수정날짜: <span th:text="${#temporals.format(board.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </div>
+
+        <div class="action-buttons">
+          <a th:href="@{/boards/edit/{id}(id=${board.id})}"><button>수정</button></a>
+          <a th:href="@{/boards/delete/{id}(id=${board.id})}" onclick="return confirm('Are you sure you want to delete this board?')"><button>삭제</button></a>
+        </div>
+      </div>
+
+      <div class="comment-list">
+        <h2>Comments</h2>
+        <h5 class="comments-count" th:text="|${#lists.size(board.answerList)} 개의 답변이 있습니다.|"></h5>
+        <ul>
+          <li class="comment-item" th:each="comment : ${board.answerList}">
+            <span class="comment-content" th:text="${comment.content2}"></span>
+            <div class="comment-date" th:if="${comment.createDate != null}">
+              작성 날짜: <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+            <div class="comment-modify-date" th:if="${comment.modifyDate != null}">
+              수정 날짜: <span th:text="${#temporals.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+            <div class="action-buttons">
+              <a th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}"><button>수정</button></a>
+              <a th:href="@{/comment/delete/{commentId}(commentId=${comment.id})}" onclick="return confirm('Are you sure you want to delete this comment?')"><button>삭제</button></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-container">
+        <h2>댓글 추가</h2>
+        <form th:action="@{|/comment/create/${board.id}|}" method="post">
+          <textarea name="content2" id="content2" placeholder="Write your comment here..."></textarea>
+          <input type="submit" value="답변등록" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
+<!--<style>-->
+<!--  body {-->
+<!--    font-family: Arial, sans-serif;-->
+<!--    /*margin: 20px;*/-->
+<!--    /*background-color: #f4f4f4;*/-->
+<!--  }-->
+
+<!--  h1 {-->
+<!--    color: #333;-->
+<!--    text-align: center;-->
+<!--  }-->
+
+<!--  button {-->
+<!--    background-color: #007BFF;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 8px 12px;-->
+<!--    text-align: center;-->
+<!--    text-decoration: none;-->
+<!--    display: inline-block;-->
+<!--    font-size: 16px;-->
+<!--    margin: 4px 2px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--  }-->
+
+<!--  button:hover {-->
+<!--    background-color: #0056b3;-->
+<!--  }-->
+
+<!--  a {-->
+<!--    text-decoration: none;-->
+<!--  }-->
+
+<!--  .item-file {-->
+<!--    margin-top: 20px;-->
+<!--    padding: 10px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 5px;-->
+<!--    background-color: #fff;-->
+<!--  }-->
+
+<!--  .file-link {-->
+<!--    display: inline-block;-->
+<!--    color: #007BFF;-->
+<!--    text-decoration: none;-->
+<!--    margin-bottom: 10px;-->
+<!--  }-->
+
+<!--  .file-link:hover {-->
+<!--    text-decoration: underline;-->
+<!--  }-->
+
+<!--  .file-image {-->
+<!--    max-width: 500px;-->
+<!--    max-height: 300px;-->
+<!--    display: block;-->
+<!--    margin-top: 10px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 5px;-->
+<!--  }-->
+
+<!--  .content-section {-->
+<!--    margin-top: 20px;-->
+<!--    padding: 20px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 5px;-->
+<!--    background-color: #fff;-->
+<!--  }-->
+
+<!--  .content-section p, .content-section pre {-->
+<!--    margin: 0 0 10px;-->
+<!--  }-->
+
+<!--  .content-section pre {-->
+<!--    white-space: pre-wrap; /* Ensures content wraps properly */-->
+<!--    background-color: #f7f7f7;-->
+<!--    padding: 10px;-->
+<!--    border-radius: 4px;-->
+<!--    border: 1px solid #ddd;-->
+<!--  }-->
+
+<!--  .date-info {-->
+<!--    margin-top: 10px;-->
+<!--    color: #666;-->
+<!--    font-size: 14px;-->
+<!--  }-->
+
+<!--  .action-buttons {-->
+<!--    margin-top: 20px;-->
+<!--  }-->
+
+<!--  .action-buttons button {-->
+<!--    background-color: #007BFF;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 10px 15px;-->
+<!--    font-size: 16px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--    margin-right: 10px;-->
+<!--  }-->
+
+<!--  .action-buttons button:hover {-->
+<!--    background-color: #0056b3;-->
+<!--  }-->
+
+<!--  .action-buttons a {-->
+<!--    margin: 0;-->
+<!--  }-->
+<!--</style>-->
+<!--<style>-->
+<!--  .comment-list {-->
+<!--    margin-top: 20px;-->
+<!--    padding: 20px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 5px;-->
+<!--    background-color: #fff;-->
+<!--  }-->
+
+<!--  .comments-count {-->
+<!--    color: #555;-->
+<!--    margin-bottom: 15px;-->
+<!--  }-->
+
+<!--  .comment-item {-->
+<!--    border-bottom: 1px solid #ddd;-->
+<!--    padding: 10px 0;-->
+<!--    margin-bottom: 10px;-->
+<!--    background-color: #fafafa;-->
+<!--    border-radius: 5px;-->
+<!--  }-->
+
+<!--  .comment-content {-->
+<!--    display: block;-->
+<!--    margin-bottom: 10px;-->
+<!--  }-->
+
+<!--  .comment-date, .comment-modify-date {-->
+<!--    color: #666;-->
+<!--    font-size: 14px;-->
+<!--  }-->
+
+<!--  .action-buttons {-->
+<!--    margin-top: 10px;-->
+<!--  }-->
+
+<!--  .action-buttons button {-->
+<!--    background-color: #007BFF;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 8px 12px;-->
+<!--    font-size: 14px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--    margin-right: 5px;-->
+<!--  }-->
+
+<!--  .action-buttons button:hover {-->
+<!--    background-color: #0056b3;-->
+<!--  }-->
+
+<!--  .action-buttons a {-->
+<!--    margin: 0;-->
+<!--  }-->
+<!--</style>-->
+<!--<style>-->
+<!--  .comment-list, .form-container {-->
+<!--    margin-top: 20px;-->
+<!--    padding: 20px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 5px;-->
+<!--    background-color: #fff;-->
+<!--  }-->
+
+<!--  .comments-count {-->
+<!--    color: #555;-->
+<!--    margin-bottom: 15px;-->
+<!--  }-->
+
+<!--  .comment-item {-->
+<!--    border-bottom: 1px solid #ddd;-->
+<!--    padding: 10px 0;-->
+<!--    margin-bottom: 10px;-->
+<!--    background-color: #fafafa;-->
+<!--    border-radius: 5px;-->
+<!--  }-->
+
+<!--  .comment-content {-->
+<!--    display: block;-->
+<!--    margin-bottom: 10px;-->
+<!--  }-->
+
+<!--  .comment-date, .comment-modify-date {-->
+<!--    color: #666;-->
+<!--    font-size: 14px;-->
+<!--  }-->
+
+<!--  .action-buttons {-->
+<!--    margin-top: 10px;-->
+<!--  }-->
+
+<!--  .action-buttons button {-->
+<!--    background-color: #007BFF;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 8px 12px;-->
+<!--    font-size: 14px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--    margin-right: 5px;-->
+<!--  }-->
+
+<!--  .action-buttons button:hover {-->
+<!--    background-color: #0056b3;-->
+<!--  }-->
+
+<!--  .form-container {-->
+<!--    background-color: #fafafa;-->
+<!--  }-->
+
+<!--  .form-container h2 {-->
+<!--    margin-top: 0;-->
+<!--  }-->
+
+<!--  textarea {-->
+<!--    width: 100%;-->
+<!--    height: 100px;-->
+<!--    padding: 10px;-->
+<!--    border: 1px solid #ccc;-->
+<!--    border-radius: 4px;-->
+<!--    margin: 10px 0;-->
+<!--    resize: vertical;-->
+<!--    box-sizing: border-box; /* Ensures padding is included in the width/height */-->
+<!--  }-->
+
+<!--  input[type="submit"] {-->
+<!--    background-color: #28a745;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 10px 15px;-->
+<!--    font-size: 16px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--    display: block;-->
+<!--    width: 100%;-->
+<!--    box-sizing: border-box; /* Ensures padding is included in the width */-->
+<!--  }-->
+
+<!--  input[type="submit"]:hover {-->
+<!--    background-color: #218838;-->
+<!--  }-->
+<!--</style>-->

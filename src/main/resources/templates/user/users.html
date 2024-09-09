@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}"
+>
+<body>
+
+
+<div  layout:fragment="content">
+  <h2>User List</h2>
+  <a th:href="@{/users/new}">Create New User</a>
+  <ul>
+    <li th:each="user : ${users}">
+       <span th:if="${user.profileImageId}">
+        <img th:src="@{/users/{id}/profileImage(id=${user.id})}" alt="Profile Image" width="50"/>
+      </span>
+      <span th:if="${user != null and user.profileImageId == null}">
+        <p>No profile image uploaded.</p>
+      </span>
+      <span th:text="${user.username}"></span> -
+<!--      <a th:href="@{/users/{id}(id=${user.id})}">Details</a> |-->
+      <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a> |
+      <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
+
+    </li>
+  </ul>
+</div>
+
+<!--자바스크립트 추가하는 영역-->
+<script layout:fragment="javascript" th:inline="javascript">
+
+</script>
+
+</body>
+</html>

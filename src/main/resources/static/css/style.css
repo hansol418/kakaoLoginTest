@@ -1,0 +1,150 @@
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 1/1; /* 3x3 비율의 정사각형으로 설정 */
+  object-fit: cover; /* 이미지가 정사각형 영역을 채우도록 설정 */
+}
+
+.card-content {
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, auto); /* 제목, 설명, modDate, regDate를 위한 4개의 행 설정 */
+}
+
+.card-content h2 {
+  margin: 10px 0;
+  font-size: 1.5em;
+  grid-row: 1 / 2; /* 제목은 첫 번째 행을 차지 */
+}
+
+.card-content p {
+  margin: 10px 0;
+  color: #555;
+}
+
+.detail-link {
+  display: inline-block;
+  margin-top: auto; /* 링크를 카드의 하단에 배치 */
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  grid-row: 4 / 5; /* 링크는 마지막 행을 차지 */
+}
+
+.detail-link:hover {
+  background-color: #45a049;
+}
+
+/* 추가된 부분: detail-card 스타일링 */
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.detail-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.detail-card img {
+  width: 40%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.detail-content {
+  width: 60%;
+}
+
+.detail-content p {
+  margin: 0;
+  color: #555;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .detail-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .detail-card img {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .detail-content {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .card-content h2 {
+    font-size: 1.2em;
+  }
+
+  .detail-link {
+    padding: 8px 12px;
+  }
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  background-color: #3e8e41;
+  transform: translateY(1px);
+}

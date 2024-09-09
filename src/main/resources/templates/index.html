@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'self' https://www.youtube.com;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공구 분석</title>
+    <!-- CSS 파일 로드 -->
+    <link rel="stylesheet" th:href="@{/css/tools_lcs.css}">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="content-section">
+            <div class="image-upload">
+                <img id="previewImage" src="placeholder-image.png" alt="이미지 미리보기">
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+            <div class="result-display">
+                <h2>공구 이미지에 따른 설명</h2>
+                <div id="predictedLabel">결과가 여기에 표시됩니다.</div>
+            </div>
+        </div>
+        <div class="video-container">
+            <h2>해당 공구에 대한 간단한 사용법 (YouTube)</h2>
+            <iframe id="videoFrame" width="560" height="315" src="" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- JS 파일 로드 -->
+    <script th:src="@{/js/tools_lcs.js}"></script>
+</div>
+</body>
+
+</html>

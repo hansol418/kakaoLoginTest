@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>공구 목록</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>공구 목록</h1>
+    <div class="card-grid">
+        <div class="card" th:each="tool : ${list}">
+            <img src="path_to_your_images_folder/" th:src="@{${tool.img_text}}" alt="공구 이미지">
+            <div class="card-content">
+                <h2><a th:href="@{/tool/detail/{id}(id=${tool.id})}" th:text="${tool.tool_name}">공구 이름</a></h2>
+                <p th:text="${#strings.abbreviate(tool.description, 30)}">공구 간단 설명</p>
+<!--                <p><strong>modDate:</strong> <span th:text="${tool.modDate}">modDate</span></p>-->
+<!--                <p><strong>regDate:</strong> <span th:text="${tool.regDate}">regDate</span></p>-->
+                <a class="detail-link" th:href="@{/tool/detail/{id}(id=${tool.id})}">상세 보기</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

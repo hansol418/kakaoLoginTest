@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+  <title>TripWithMe 페이지</title>
+
+  <link th:href="@{/css/board_msy.css}" rel="stylesheet"/>
+  <link th:href="@{/css/common_msy.css}" rel="stylesheet">
+<!--  <link th:href="@{/css/swiper-min.css}" rel="stylesheet">-->
+<!--  <link th:href="@{/css/style.css}" rel="stylesheet">-->
+<!--  <link th:href="@{/css/slick.css}" rel="stylesheet">-->
+  <script th:src="@{/js/html5.js}"></script>
+  <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+  <script th:src="@{/js/slick.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+  <div style="display: flex;justify-content: center;">
+    <div style="width: 90%">
+      <h1>댓글 수정</h1>
+      <div class="form-container">
+        <style>
+          .cancel-button {
+            background-color: #f44336; /* 배경색: 빨간색 */
+            color: white; /* 글자색: 흰색 */
+            border: none; /* 테두리 없음 */
+            padding: 10px 20px; /* 여백: 위아래 10px, 좌우 20px */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            text-decoration: none; /* 밑줄 없음 */
+            display: inline-block; /* 인라인 블록 */
+            font-size: 16px; /* 글자 크기 */
+            border-radius: 5px; /* 테두리 둥글게 */
+            cursor: pointer; /* 커서 모양을 포인터로 */
+            transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+          }
+
+          .cancel-button:hover {
+            background-color: #d32f2f; /* 마우스 오버 시 배경색 조금 어둡게 */
+          }
+
+        </style>
+        <form th:action="@{/comment/update/{commentId}(commentId=${commentDto.id})}" method="post">
+          <input type="hidden" name="boardId" th:value="${commentDto.boardId}" />
+          <textarea name="content2" id="content2" th:text="${commentDto.content2}" placeholder="Edit your comment here..."></textarea>
+          <div class="form-buttons">
+            <input type="submit" value="저장" />
+            <a href="#" th:href="@{/boards/{boardId}(boardId=${commentDto.boardId})}"><button class="cancel-button">취소</button> </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+<!--<style>-->
+<!--  body {-->
+<!--    font-family: Arial, sans-serif;-->
+<!--    /*background-color: #f4f4f4;*/-->
+<!--    /*margin: 0;*/-->
+<!--    /*padding: 20px;*/-->
+<!--  }-->
+
+<!--  .form-container {-->
+<!--    width: 100%;-->
+<!--    margin: 0 auto;-->
+<!--    padding: 20px;-->
+<!--    background-color: #fff;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 8px;-->
+<!--    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--  }-->
+
+<!--  h1 {-->
+<!--    color: #333;-->
+<!--    margin-bottom: 20px;-->
+<!--    text-align: center;-->
+<!--  }-->
+
+<!--  textarea {-->
+<!--    width: 100%;-->
+<!--    height: 150px;-->
+<!--    padding: 10px;-->
+<!--    border: 1px solid #ccc;-->
+<!--    border-radius: 4px;-->
+<!--    box-sizing: border-box; /* Ensures padding is included in the width */-->
+<!--    font-size: 16px;-->
+<!--    resize: vertical; /* Allows vertical resizing only */-->
+<!--  }-->
+
+<!--  .form-buttons {-->
+<!--    text-align: right;-->
+<!--    margin-top: 20px;-->
+<!--  }-->
+
+<!--  .form-buttons input[type="submit"] {-->
+<!--    background-color: #28a745;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 10px 20px;-->
+<!--    font-size: 16px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--    margin-right: 10px;-->
+<!--  }-->
+
+<!--  .form-buttons input[type="submit"]:hover {-->
+<!--    background-color: #218838;-->
+<!--  }-->
+
+<!--  .form-buttons a {-->
+<!--    color: #007bff;-->
+<!--    text-decoration: none;-->
+<!--    font-size: 16px;-->
+<!--  }-->
+
+<!--  .form-buttons a:hover {-->
+<!--    text-decoration: underline;-->
+<!--  }-->
+<!--</style>-->

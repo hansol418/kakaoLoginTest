@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+  <title>ToolFind 페이지</title>
+
+  <link th:href="@{/css/common_msy.css}" rel="stylesheet">
+  <link th:href="@{/css/swiper-min.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link th:href="@{/css/slick.css}" rel="stylesheet">
+  <script th:src="@{/js/html5.js}"></script>
+  <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+  <script th:src="@{/js/slick.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <section id="main-slide" class="inner"><!--main-slide : start-->
+    <div class="lazy slider" data-sizes="50vw">
+      <div>
+        <a href="#"><img src="/images/lcs_busan1.jpeg" data-sizes="100vw"></a>
+      </div>
+      <div>
+        <a href="#"><img src="/images/lcs_busan2.jpeg" data-sizes="100vw"></a>
+      </div>
+      <div>
+        <a href="#"><img src="/images/lcs_busan3.jpeg" data-sizes="100vw"></a>
+      </div>
+      <div>
+        <a href="#"><img src="/images/lcs_busan4.jpeg" data-sizes="100vw"></a>
+      </div>
+    </div>
+  </section><!--main-slide : end -->
+  <section id="Quick" class="inner"><!-- Quick : start-->
+    <div class="Quick-title"><!--Quick-title : start-->
+      <h2>원하는 서비스를<br><span>빠르게 찾아보세요</span></h2>
+      <div class="search-bar"><!--search-bar : start-->
+        <form>
+          <input type="text" placeholder="무엇을 찾으시나요?">
+          <a onclick="top_search();"><img src="/images/search-icon.png" alt="검색버튼"></a>
+        </form>
+      </div><!--search-bar : end-->
+    </div><!--Quick-title : end-->
+    <ul class="Quick-menu"><!--Quick-menu : start-->
+      <li><a href="/"><img src="/images/lcs_tripicon.png"></a>
+        <ul>
+          <li>이미지분석</li>
+        </ul>
+      <li><a href="/tool/list"><img src="/images/lcs_seaicon.png"></a>
+        <ul>
+          <li>공구상세</li>
+        </ul>
+      <li><a href="#"><img src="/images/lcs_festivalicon.png"></a>
+        <ul>
+          <li>커뮤니티</li>
+        </ul>
+      <li><a href="#"><img src="/images/lcs_q&aicon.png"></a>
+        <ul>
+          <li>1:1문의</li>
+        </ul>
+      </li>
+
+    </ul><!--Quick-menu : end-->
+
+  </section><!--Quick : end-->
+  <section id="main-triptitle" class="inner"><!-- main-triptitle : start-->
+    <div class="trip-title"><!--trip-title : start-->
+      <h2><span>추천도구</span>을<br>확인해보세요!</h2>
+      <button type="button" class="btn_pause">
+        play
+      </button>
+    </div><!--trip-title :end-->
+    <div class="regular slider"> <!--regular : start-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best1.png" alt="망치이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>망치</h3>
+            <p>못 등을 타격할때 이용</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best2.png" alt="드라이버이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>드라이버</h3>
+            <p>나사를 돌려 끼우고 빼는 도구 풀네임은 스크루드라이버</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best3.png" alt="톱이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>톱</h3>
+            <p>목재 금속 석재 플라스틱 등을 절단하기 위한 공구</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best4.png" alt="렌치이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>렌치</h3>
+            <p>너트나 볼트 또는 관 등을 조이거나 틀어 돌리는데 쓰는 공구 스패너라고도 합니다.</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best5.png" alt="그라인더">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>그라인더</h3>
+            <p>고속도로 회전하는 연삭 숫돌을 사용하여 공작물의 면을 깎는 기계</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best6.png" alt="줄자 이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>줄자</h3>
+            <p>가늘고 얇은 천이나 쇠 따위에 눈금을 새겨 만든 띠 모양의 긴자.</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best7.png" alt="공업용가위 이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>다목적 가위</h3>
+            <p>전선 등을 절단할때 쓰는 공구</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best7.png" alt="니퍼 이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>니퍼</h3>
+            <p>피복된 전선을 드러내기위해 전선이나 철사, 선재를 절단할때 이용</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best7.png" alt="전동드릴 이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>전동드릴</h3>
+            <p>전동 공구로 회전력을 이용해서 금속이나 목재 등을 가공할때 쓰임</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+      <div class="slide-box"><!--slide-box : start-->
+        <a href="#">
+          <div class="img-box"><!--img-box : start-->
+            <img src="/images/lcs_busan_best7.png" alt="버니어캘리퍼스 이미지">
+          </div><!--img-box : end-->
+          <div class="text-box"><!--text-box : start-->
+            <h3>버니어 캘리퍼스</h3>
+            <p>물체의 외경, 내경, 깊이 등을 0.05mm정도의 정확도로 측정하는 기구</p>
+          </div><!-- text-box : end-->
+        </a>
+      </div><!--slide-box : end-->
+
+    </div><!--regular : end-->
+    <div class="background"></div>
+
+  </section><!--main-triptitle : end-->
+
+  <section id="review-warp" class="inner"><!--review-warp : start-->
+    <h2>공구 이미지분석 시스템 사용 <span>후기</span></h2>
+    <p>사이트를 이용한 한줄후기를 만나보세요</p>
+    <div class="content-box"><!--content-box : start-->
+      <ul id="rolling_notice" class="rolling">
+        <li>
+          <div class="img-box"><!--img-box : start-->
+            <div class="icon">
+              <img src="/images/review-img2.png" alt="리뷰 아이콘">
+            </div>
+            <p>lcs***</p>
+          </div><!--img-box : end-->
+          <a href="#" class="text-box"><!--text-box : start -->
+            <h2>망치</h2>
+            <p>덕분에 망치를 어디에 이용할지 알았습니다.
+            </p>
+          </a> <!--text-box : end-->
+        </li>
+        <li>
+          <div class="img-box"><!--img-box : start-->
+            <div class="icon">
+              <img src="/images/review-img2.png" alt="리뷰 아이콘">
+            </div>
+            <p>lsy***</p>
+          </div><!--img-box : end-->
+          <a href="#" class="text-box"><!--text-box : start -->
+            <h2>드라이버</h2>
+            <p>드라이버를 이렇게 이용할 수 있는지 깨달았어요 감사해요
+            </p>
+          </a> <!--text-box : end-->
+        </li>
+      </ul>
+    </div><!--content-box :end-->
+  </section><!-- review-warp :end-->
+  <section id="information" class="inner"><!-- information : start-->
+    <div class="information-left"><!--information-left : start-->
+      <p class="title">공구소개</p>
+      <div class="regular slider">
+        <div>
+          <a href="#"><img src="/images/lcs_busan_festival1.jpg" alt="테스트">
+          </a>
+          <p class="text">테스트</p>
+        </div>
+      </div>
+    </div><!--information-left : end-->
+  </section><!-- information : end-->
+</div>
+</body>
+
+</html>

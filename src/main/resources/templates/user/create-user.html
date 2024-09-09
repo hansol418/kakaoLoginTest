@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="www.thymeleaf.org"
+>
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/join_lhs.css">
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div class="card-header">
+    <h2>JOIN Page</h2>
+  </div>
+  <div class="card-body">
+    <form th:action="@{/users/new}" method="post" enctype="multipart/form-data">
+      <div class="input-group mb-3">
+        <input type="text" name="username" class="form-control" placeholder="username 입력해주세요"/>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="email" name="email" class="form-control" placeholder="email 입력해주세요"/>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="password" name="password" class="form-control" placeholder="password 입력해주세요"/>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="password"  name="password2" class="form-control" placeholder="password 한번 더 입력해주세요"/>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="tel"  name="phone" class="form-control" placeholder="phone 번호 입력해주세요"/>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text"  name="address" id="fullAddress" class="form-control" placeholder="address 한번 더 입력해주세요"/>
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" id="sample6_postcode" placeholder="우편번호">
+        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" id="sample6_address" class="form-control" placeholder="주소"><br>
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" id="sample6_detailAddress" class="form-control" placeholder="상세주소">
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" id="sample6_extraAddress" class="form-control" placeholder="참고항목">
+      </div>
+
+      <div class="input-group mb-3">
+        <label for="profileImage">Profile Image: &nbsp;</label>
+        <input type="file" id="profileImage" name="profileImage" class="form-control" /><br/>
+      </div>
+
+      <button class="btn btn-primary w-100 submitBtn" type="submit">Join</button>
+    </form>
+  </div>
+</div>
+
+<!-- 다음 주소 관련 함수 -->
+<script>
+  function sample6_execDaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        var addr = ''; // 주소 변수
+        var extraAddr = ''; // 참고항목 변수
+
+        if (data.userSelectedType === 'R') {
+          addr = data.roadAddress;
+        } else {
+          addr = data.jibunAddress;
+        }
+
+        if(data.userSelectedType === 'R'){
+          if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+            extraAddr += data.bname;
+          }
+          if(data.buildingName !== '' && data.apartment === 'Y'){
+            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          if(extraAddr !== ''){
+            extraAddr = ' (' + extraAddr + ')';
+          }
+          document.getElementById("sample6_extraAddress").value = extraAddr;
+        } else {
+          document.getElementById("sample6_extraAddress").value = '';
+        }
+
+        document.getElementById('sample6_postcode').value = data.zonecode;
+        document.getElementById("sample6_address").value = addr;
+        document.getElementById("sample6_detailAddress").focus();
+      }
+    }).open();
+  }
+
+  function updateFullAddress() {
+    var postcode = document.getElementById('sample6_postcode').value;
+    var address = document.getElementById('sample6_address').value;
+    var detailAddress = document.getElementById('sample6_detailAddress').value;
+    var extraAddress = document.getElementById('sample6_extraAddress').value;
+
+    var fullAddress = '('  + postcode + ')' + ' ' + address + ' ' + detailAddress + ' ' + extraAddress;
+
+    document.getElementById('fullAddress').value = fullAddress.trim();
+  }
+
+  document.getElementById('sample6_postcode').addEventListener('input', updateFullAddress);
+  document.getElementById('sample6_address').addEventListener('input', updateFullAddress);
+  document.getElementById('sample6_detailAddress').addEventListener('input', updateFullAddress);
+  document.getElementById('sample6_extraAddress').addEventListener('input', updateFullAddress);
+</script>
+
+<!-- 외부 라이브러리 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+</body>
+</html>

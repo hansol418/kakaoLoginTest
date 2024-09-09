@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+/*googleips 웹폰트 css 파일 불러오기*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+
+/* 저장된 글꼴 파일 선언*/
+/* @font-face { font-family : font_gothic;  font-weight:300;  
+                src : url(../font/NanumGothic.ttf); }  */
+@font-face {
+      font-family: s-core5;
+      src: url(../font/SCDream5.woff)}
+
+@font-face {
+      font-family: s-core6;
+      src: url(../font/SCDream6.woff)}
+
+@font-face {
+      font-family: s-core8;
+      src: url(../font/SCDream8.woff)}
+
+@font-face {
+      font-family: 'Noto_Sans_KR_black';
+      font-weight: 900;
+      src: url(../font/NotoSansKR-Black.otf);}
+
+@font-face {
+      font-family: 'Noto_Sans_KR_bold';
+      font-weight: 700;
+      src: url(../font/NotoSansKR-Bold.otf);}
+
+@font-face {
+      font-family: 'Noto_Sans_Light';
+      font-weight: 600;
+      src: url(../font/NotoSansKR-Light.otf);}
+
+@font-face {
+      font-family: 'Noto_Sans_KR_Regular';
+      font-weight: 400;
+      src: url(../font/NotoSansKR-Regular.otf);}
+
+@font-face {
+      font-family: 'Noto_Sans_KR_Medium"';
+      font-weight: 500;
+      src: url(../font/NotoSansKR-Medium.otf);}
+
+* { padding: 0;}
+
+body{ font-size:16px;
+      color:#484848;
+      font-family: 'Noto_Sans_KR_Medium"'; 
+      margin: 0;}
+p,h2,ul, ol, li{list-style-type:none; margin: 0;}
+img, fieldset{border:none;vertical-align: middle}
+hr {clear:both;border:none}
+a {color:inherit;text-decoration:none}
+table{border-collapse:collapse}
+input, textarea {color:inherit;font-size:inherit;
+       font-family:inherit;
+       vertical-align: middle}
+button{outline:0}
+input:focus {
+      outline: none;
+    }

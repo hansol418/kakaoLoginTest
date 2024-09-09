@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+        <title>TripWithMe 페이지</title>
+
+        <!-- CSS -->
+        <link th:href="@{/lcs/css/common.css}" rel="stylesheet">
+        <link th:href="@{/lcs/css/swiper-min.css}" rel="stylesheet">
+        <link th:href="@{/lcs/css/style.css}" rel="stylesheet">
+        <link th:href="@{/lcs/css/slick.css}" rel="stylesheet">
+
+        <!-- 기본 JS -->
+        <script th:src="@{/lcs/js/html5.js}"></script>
+        <script th:src="@{/lcs/js/jquery-3.1.1.min.js}"></script>
+        <script src="http://code.jquery.com/jquery-migrate-3.0.0.js"></script>
+        <script th:src="@{/lcs/js/slick.js}"></script>
+        <script th:src="@{/lcs/js/main.js}"></script>
+
+        <!-- 추가적인 외부 라이브러리 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+        <!-- Layout Fragments for additional JS/CSS -->
+        <th:block layout:fragment="head"></th:block>
+    </head>
+
+    <body>
+        <div id="wrap" layout:fragment="content">
+
+            <header id="header"><!--header : start-->
+                <div class="header-line">
+                    <div class="top-wrap inner"> <!--top-wrap : start-->
+                        <div class="logo-box"><!--logo : start-->
+                            <a href="/lcs/list"><img src="/images/lcs_logo.png" alt="메인페이지 바로가기"></a>
+                        </div><!--logo : end-->
+                        <div class="util-box"><!--util-box : start-->
+                            <a sec:authorize="isAnonymous()" th:href="@{/msy/join}">회원가입</a>
+                            <a sec:authorize="isAnonymous()" th:href="@{/msy/login}">로그인</a>
+                            <a sec:authorize="isAuthenticated()" th:href="@{/msy/logout}">로그아웃</a>
+                            <a th:href="@{/lcs/list}">사이트맵</a>
+                        </div><!--util-box : end-->
+                    </div>
+                </div><!--top-wrap : end-->
+            </header><!--header : end-->
+
+            <div id="bottom-wrap" class="inner"><!-- bottom-wrap : start-->
+                <nav>
+                    <ul class="nav-box"><!-- nav-box : start-->
+                        <li class="nav-btn"> <!--nav-btn : start-->
+                            <div>여행지</div>
+                            <ul class="nav-list"><!--nav-list : start-->
+                                <li><a href="/lcs/trip">추천 여행지</a></li>
+                                <li><a href="/lcs/trip-random">랜덤 여행지</a></li>
+                            </ul><!--nav-list : end-->
+                        </li><!--nav-btn : end-->
+                        <li class="nav-btn"> <!--nav-btn : start-->
+                            <div>축제</div>
+                            <ul class="nav-list"><!--nav-list : start-->
+                                <li><a href="/lcs/festival">추천 축제</a></li>
+                                <li><a href="/lcs/festival-random">랜덤 축제</a></li>
+                            </ul><!--nav-list : end-->
+                        </li><!--nav-btn : end-->
+                        <li class="nav-btn"> <!--nav-btn : start-->
+                            <div>맞춤 여행지</div>
+                            <ul class="nav-list"><!--nav-list : start-->
+                                <li><a href="/lcs/trip-custom">맞춤 여행지</a></li>
+                            </ul><!--nav-list : end-->
+                        </li><!--nav-btn : end-->
+                        <li class="nav-btn"> <!--nav-btn : start-->
+                            <a href="/hjt/comunity">커뮤니티</a>
+                            <ul class="nav-list"><!--nav-list : start-->
+                                <li><a href="hjt/realchat">트립톡</a></li>
+                                <li><a href="hjt/board">여행 게시판</a></li>
+                            </ul><!--nav-list : end-->
+                        </li><!--nav-btn : end-->
+                    </ul><!-- nav-box : end-->
+                </nav>
+            </div><!-- bottom-wrap : end-->
+
+        </div><!--wrap-->
+
+        <section id="last-info" class="inner"><!--last-info : start-->
+            <div class="banner-box"><!--banner-box : start-->
+                <a href="#"><img src="/images/lcs_busan_Event.png" alt="이벤트 배너"></a>
+            </div><!--banner-box : end-->
+            <div class="sqa"><!--sqa : start-->
+                <p class="title">무엇이 궁금하신가요?</p>
+                <div class="content"><!--content : start-->
+                    <div class="phon"><!--phon : start-->
+                        <p>010-9810-8268</p>
+                        <a href="#">자주묻는질문</a>
+                    </div><!--phon : end-->
+                    <div class="time"><!--time : start-->
+                        <h4>운영시간</h4>
+                        <p>월요일 ~ 금요일 09:00 ~ 18:00<br>
+                            주말 및 법정 공휴일은 휴관합니다.</p>
+                    </div><!--time : end-->
+                </div><!--content : end-->
+            </div><!--sqa : end-->
+        </section><!--last-info : end-->
+
+        <section id="sns" class="inner"><!--sns : start-->
+            <div class="sns-left"><!--sns-left : start-->
+                <h2>Trip With Me<span>SNS</span></h2>
+                <p>실시간 소식을 편리하게 확인해보세요!</p>
+            </div><!--sns-left : end-->
+            <div class="sns-right"><!--sns-right : start-->
+                <div class="naver"><!--naver : start-->
+                    <a href="https://blog.naver.com/seochowomen" target="_blank">
+                        <img src="/images/sns-naver.png" alt="네이버 SNS 바로가기 아이콘">
+                        <p>네이버 블로그</p>
+                    </a>
+                </div><!--naver : end-->
+                <div class="face-book" ><!-- face book : start-->
+                    <a href="https://www.facebook.com/seochowomen2016" target="_blank">
+                        <img src="/images/sns-facebook.png" alt="페이스북 SNS 바로가기 아이콘">
+                        <p>페이스북</p>
+                    </a>
+                </div><!--face-book : end-->
+                <div class="insta"><!--insta : start-->
+                    <a href="https://www.instagram.com/seochowomen/" target="_blank">
+                        <img src="/images/sns-insta.png" alt="인스타그램 SNS 바로가기 아이콘">
+                        <p>인스타그램</p>
+                    </a>
+                </div><!--insta : end-->
+                <div class="youtube"><!--youtube : start-->
+                    <a href="https://www.youtube.com/channel/UC5L6G0Eh04X-wl1eJCjU_rg" target="_blank">
+                        <img src="/images/sns-youtube.png" alt="유튜브 SNS 바로가기 아이콘">
+                        <p>유튜브</p>
+                    </a>
+                </div><!--youtube : end-->
+                <div class="kakao"><!--kakao : start-->
+                    <a href="https://pf.kakao.com/_ZeJMC" target="_blank">
+                        <img src="/images/sns-kakao.png" alt="카카오톡 SNS 바로가기 아이콘">
+                        <p>카카오톡</p>
+                    </a>
+                </div><!--kakao : end-->
+            </div><!--sns-right : end-->
+        </section><!-- sns : end-->
+
+        <footer id="footer-wrap"> <!-- footer : start-->
+            <div class="inner">
+                <div class="logo-sns"><!--logo-sns :start-->
+                    <img src="/images/lcs_footer_logo.png" alt="로고이미지">
+                    <div class="sns"><!--sns : start-->
+                        <a href="https://blog.naver.com/seochowomen" target="_blank"><img src="/images/footer-naver.png" alt="네이버 SNS 바로가기"></a>
+                        <a href="https://www.facebook.com/seochowomen2016" target="_blank"><img src="/images/footer-facebook.png" alt="페이스북 SNS 바로가기"></a>
+                        <a href="https://www.youtube.com/channel/UC5L6G0Eh04X-wl1eJCjU_rg" target="_blank"><img src="/images/footer-youtube.png" alt="유튜브 SNS 바로가기"></a>
+                        <a href="https://www.instagram.com/seochowomen/" target="_blank"><img src="/images/footer-insta.png" alt="인스타 SNS 바로가기"></a>
+                        <a href="https://pf.kakao.com/_ZeJMC" target="_blank"><img src="/images/footer-kakao.png" alt="카카오톡 SNS 바로가기"></a>
+                    </div><!--sns : end-->
+                </div><!--logo-sns : end-->
+                <div class="content"><!--content : start-->
+                    <div>
+                        <a href="#">개인정보 취급방침</a>
+                        <a href="#">이용약관</a>
+                        <a href="#">사이트맵</a>
+                        <a href="#">오시는길</a>
+                    </div>
+                    <div class="family">
+                        <a href="#" class="click" onclick="return false">
+                            퀵 리스트<i class="icon" role="img"></i>
+                        </a>
+                        <ul>
+                            <li><a href="https://www.seocho.go.kr/site/seocho/main.do" target="_blank">축제</a></li>
+                            <li><a href="https://seochowomen.kr/seocho/index.do" target="_blank">여행</a></li>
+                            <li><a href="https://www.bbcenter.or.kr/main/index.do" target="_blank">커뮤니티</a></li>
+                        </ul>
+                    </div>
+                </div><!--content : end-->
+                <p>부산 부산진구 중앙대로 708 부산파이낸스센터 4층</br>
+                    대표전화: 010-9810-8268</br>
+                    사업자등록번호 114-82-61807</br>
+                    팀명 : 2조(임채수,홍진태,오현제,문수연)</br>
+                    Copyright ⓒ. All Rights Reserved.</p>
+            </div>
+        </footer><!-- footer : end-->
+
+        <!-- 추가적인 스크립트 삽입을 위한 자식 페이지 JS Fragment -->
+        <script layout:fragment="javascript"></script>
+
+    </body>
+</html>

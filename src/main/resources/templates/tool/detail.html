@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>공구 상세 설명 페이지</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${detail.tool_name}">공구 이름</h1>
+    <div class="detail-card">
+        <img src="path_to_your_images_folder/hammor.jpg" th:src="@{${detail.img_text}}" alt="공구 이미지">
+        <div class="detail-content">
+            <p th:text="${detail.description}">여기에 상세 설명이 들어갑니다.</p>
+        </div>
+    </div>
+    <div class="back-button-container">
+        <a href="/tool/list" class="back-button">돌아 가기</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/base.html}">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+  <title>TripWithMe 페이지</title>
+
+  <link th:href="@{/css/board_msy.css}" rel="stylesheet"/>
+  <link th:href="@{/css/common_msy.css}" rel="stylesheet">
+<!--  <link th:href="@{/css/swiper-min.css}" rel="stylesheet">-->
+<!--  <link th:href="@{/css/style.css}" rel="stylesheet">-->
+<!--  <link th:href="@{/css/slick.css}" rel="stylesheet">-->
+  <script th:src="@{/js/html5.js}"></script>
+  <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+  <script th:src="@{/js/slick.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+  <div class="form-container">
+    <form th:action="@{/boards/update}" method="post" enctype="multipart/form-data">
+      <div class="form-header">
+        <a href="/boards"><button type="button" class="btn">전체보기</button></a>
+      </div>
+
+      <h1 th:if="${boardDto.id == null}">글 작성</h1>
+      <h1 th:if="${boardDto.id != null}">글 수정</h1>
+
+      <input type="hidden" name="id" th:value="${boardDto.id}"/>
+
+      <div class="form-group">
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" th:value="${boardDto.title}" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="writer">글쓴이:</label>
+        <input type="text" id="writer" name="writer" th:value="${boardDto.writer}" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="boardContent">내용:</label>
+        <textarea id="boardContent" name="boardContent" rows="5" required th:text="${boardDto.boardContent}"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="file">파일:</label>
+        <input type="file" id="file" name="file"/>
+
+        <div class="file-section" th:if="${boardDto.filename != null}">
+          <p>현재 파일:</p>
+          <a class="file-link" th:href="@{/files/{filename}(filename=${boardDto.filename})}" th:text="${boardDto.filename}"></a>
+          <br/>
+          <img class="file-image" th:src="@{/files/{filename}(filename=${boardDto.filename})}" alt="Current attached image"/>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">저장</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
+<!--<style>-->
+<!--  body {-->
+<!--    font-family: Arial, sans-serif;-->
+<!--    /*margin: 20px;*/-->
+<!--    /*background-color: #f4f4f4;*/-->
+<!--  }-->
+
+<!--  h1 {-->
+<!--    color: #333;-->
+<!--    margin-bottom: 20px;-->
+<!--    text-align: center;-->
+<!--  }-->
+
+<!--  .btn {-->
+<!--    background-color: #007BFF;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 8px 12px;-->
+<!--    text-align: center;-->
+<!--    text-decoration: none;-->
+<!--    display: inline-block;-->
+<!--    font-size: 16px;-->
+<!--    margin: 4px 2px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--  }-->
+
+<!--  .btn:hover {-->
+<!--    background-color: #0056b3;-->
+<!--  }-->
+
+<!--  .form-container {-->
+<!--    background-color: #fff;-->
+<!--    padding: 20px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 5px;-->
+<!--    /*max-width: 600px;*/-->
+<!--    margin: auto;-->
+<!--  }-->
+
+<!--  .form-group {-->
+<!--    margin-bottom: 15px;-->
+<!--  }-->
+
+<!--  .form-group label {-->
+<!--    display: block;-->
+<!--    font-weight: bold;-->
+<!--    margin-bottom: 5px;-->
+<!--  }-->
+
+<!--  .form-group input[type="text"],-->
+<!--  .form-group textarea,-->
+<!--  .form-group input[type="file"] {-->
+<!--    width: 100%;-->
+<!--    padding: 10px;-->
+<!--    border: 1px solid #ccc;-->
+<!--    border-radius: 4px;-->
+<!--    box-sizing: border-box; /* Ensures padding is included in the width */-->
+<!--  }-->
+
+<!--  .form-group textarea {-->
+<!--    resize: vertical; /* Allows vertical resizing only */-->
+<!--  }-->
+
+<!--  .file-section {-->
+<!--    margin-top: 15px;-->
+<!--    padding: 10px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 4px;-->
+<!--    background-color: #fafafa;-->
+<!--  }-->
+
+<!--  .file-link {-->
+<!--    color: #007BFF;-->
+<!--    text-decoration: none;-->
+<!--  }-->
+
+<!--  .file-link:hover {-->
+<!--    text-decoration: underline;-->
+<!--  }-->
+
+<!--  .file-image {-->
+<!--    max-width: 500px; /* Adjust as needed */-->
+<!--    max-height: 300px; /* Adjust as needed */-->
+<!--    display: block;-->
+<!--    margin-top: 10px;-->
+<!--    border: 1px solid #ddd;-->
+<!--    border-radius: 4px;-->
+<!--  }-->
+
+<!--  .btn-submit {-->
+<!--    background-color: #28a745;-->
+<!--    color: white;-->
+<!--    border: none;-->
+<!--    padding: 10px 15px;-->
+<!--    font-size: 16px;-->
+<!--    cursor: pointer;-->
+<!--    border-radius: 4px;-->
+<!--    display: block;-->
+<!--    width: 100%;-->
+<!--    box-sizing: border-box; /* Ensures padding is included in the width */-->
+<!--  }-->
+
+<!--  .btn-submit:hover {-->
+<!--    background-color: #218838;-->
+<!--  }-->
+<!--</style>-->
