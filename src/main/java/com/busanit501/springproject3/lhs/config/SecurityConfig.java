@@ -67,32 +67,13 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/users/login")
-                                .defaultSuccessUrl("/main", true)
-                                .permitAll()
-                )
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/api/users","/users/new","/refreshToken").permitAll()
-                                .requestMatchers("/users/**").authenticated()
-
-                )
-                .sessionManagement(sessionManagement ->
-                        sessionManagement
-                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                )
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/users/new","/refreshToken").permitAll()
-                                .requestMatchers("/users/**","/reservations/**","/payments/**").authenticated()
-
-
-                );
-
-
+        // 폼 로그인 설정
+        http.formLogin(formLogin ->
+                formLogin
+                        .loginPage("/users/login")
+                        .defaultSuccessUrl("/main", true)
+                        .permitAll()
+        );
 
         // 로그아웃 설정
         http.logout(logout ->
@@ -100,11 +81,11 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/users/login")
         );
 
-//         URL별 접근 권한 설정
+        // URL별 접근 권한 설정
         http.authorizeRequests(authorizeRequests ->
                 authorizeRequests
                         .requestMatchers("/api/users", "/users/new", "/refreshToken").permitAll() // 회원가입, 토큰 갱신 등은 누구나 접근 가능
-                        .requestMatchers("/users/mypage").authenticated() // 마이페이지는 로그인된 사용자만 접근 가능
+                        .requestMatchers("/users/mypage", "/users/*/confirmDelete").authenticated() // 마이페이지와 비밀번호 확인 페이지는 로그인된 사용자만 접근 가능
                         .requestMatchers("/users/**").authenticated() // 그 외 /users/** 경로는 인증된 사용자만 접근 가능
         );
 
