@@ -142,4 +142,5 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         return thumbnail_image;
     }
 
+
 }
