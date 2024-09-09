@@ -5,6 +5,8 @@ import com.busanit501.springproject3.lhs.security.filter.APILoginFilter;
 import com.busanit501.springproject3.lhs.security.filter.RefreshTokenFilter;
 import com.busanit501.springproject3.lhs.security.filter.TokenCheckFilter;
 import com.busanit501.springproject3.lhs.security.handler.APILoginSuccessHandler;
+import com.busanit501.springproject3.lhs.security.handler.Custom403Handler;
+import com.busanit501.springproject3.lhs.security.handler.CustomSocialLoginSuccessHandler;
 import com.busanit501.springproject3.lhs.service.UserService;
 import com.busanit501.springproject3.lhs.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -35,12 +40,15 @@ public class SecurityConfig {
 
     private final JWTUtil jwtUtil;
     private final APIUserDetailsService apiUserDetailsService;
+    private final CustomSocialLoginSuccessHandler customSocialLoginSuccessHandler;
 
+    // PasswordEncoder Bean
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // JWT 기반 필터 설정
     private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil, APIUserDetailsService apiUserDetailsService) {
         return new TokenCheckFilter(apiUserDetailsService, jwtUtil);
     }
@@ -56,18 +64,19 @@ public class SecurityConfig {
 
         APILoginFilter apiLoginFilter = new APILoginFilter("/generateToken");
         apiLoginFilter.setAuthenticationManager(authenticationManager);
-
         APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
         apiLoginFilter.setAuthenticationSuccessHandler(successHandler);
 
+        // JWT 필터 추가
         http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(tokenCheckFilter(jwtUtil, apiUserDetailsService), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new RefreshTokenFilter("/refreshToken", jwtUtil), TokenCheckFilter.class);
 
+        // CSRF 비활성화
         http.csrf(csrf -> csrf.disable());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // 폼 로그인 설정
+        // 기본 폼 로그인 설정
         http.formLogin(formLogin ->
                 formLogin
                         .loginPage("/users/login")
@@ -79,6 +88,13 @@ public class SecurityConfig {
         http.logout(logout ->
                 logout.logoutUrl("/users/logout")
                         .logoutSuccessUrl("/users/login")
+        );
+
+        // 소셜 로그인 설정 추가
+        http.oauth2Login(oauth ->
+                oauth
+                        .loginPage("/users/login")
+                        .successHandler(customSocialLoginSuccessHandler) // 소셜 로그인 후 처리
         );
 
         // URL별 접근 권한 설정
@@ -97,6 +113,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // CORS 설정
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -109,5 +126,11 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    // 사용자 정의한 403 예외 처리
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
     }
 }
