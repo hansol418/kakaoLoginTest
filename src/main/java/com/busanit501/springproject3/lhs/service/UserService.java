@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    // 프로필 이미지, 몽고디비 연결
     @Autowired
     ProfileImageRepository profileImageRepository;
 
@@ -34,74 +36,73 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    // 유저명으로 유저 가져오기
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    // 이메일로 유저 가져오기
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    // 유저 ID로 유저 가져오기 (getUserById 메서드 추가)
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    // 유저 생성
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public User createUser(User user) {
         user.addRole(MemberRole.USER);
         return userRepository.save(user);
     }
 
-    // 유저 정보 업데이트
     public User updateUser(Long id, User userDetails) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
         user.setUsername(userDetails.getUsername());
         user.setEmail(userDetails.getEmail());
-        user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+
         return userRepository.save(user);
     }
 
-    // 유저 삭제
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        // 프로필 이미지 삭제
+        if(user.getProfileImageId() != null && !user.getProfileImageId().isEmpty()) {
+            deleteProfileImage(user);
+        }
         userRepository.delete(user);
     }
 
-    // 소셜 로그인 사용자의 비밀번호 변경 처리
-    public void updateSocialUserPassword(String email, String newPassword) {
-        Optional<User> result = userRepository.findByEmail(email);
-
-        if (result.isPresent()) {
-            User user = result.get();
-            user.setPassword(passwordEncoder.encode(newPassword));
-            userRepository.save(user);
-        } else {
-            throw new RuntimeException("User not found");
-        }
-    }
-
-    // 프로필 이미지 업로드
+    //프로필 이미지 업로드, 레스트 형식
     public void saveProfileImage(Long userId, MultipartFile file) throws IOException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
         ProfileImage profileImage = new ProfileImage(
                 file.getOriginalFilename(),
                 file.getContentType(),
                 file.getBytes()
         );
         ProfileImage savedImage = profileImageRepository.save(profileImage);
+
+        // Link the profile image to the user
         user.setProfileImageId(savedImage.getId());
         userRepository.save(user);
     }
 
-    // 프로필 이미지 가져오기
     public ProfileImage getProfileImage(String imageId) {
         return profileImageRepository.findById(imageId)
                 .orElseThrow(() -> new RuntimeException("Image not found"));
+    }
+
+    // 프로필 이미지만 삭제
+    public void deleteProfileImage(User user) {
+        String profileImageId = user.getProfileImageId();
+
+        if (profileImageId != null) {
+            profileImageRepository.deleteById(profileImageId);
+            user.setProfileImageId(null);
+            userRepository.save(user);
+        }
     }
 }

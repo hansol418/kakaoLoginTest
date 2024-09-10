@@ -30,14 +30,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // 소셜 로그인 여부를 나타냅니다
-    private boolean social;
-
-    // 프로필 이미지 (MongoDB에 저장된 이미지 ID)
+    // 프로필 이미지, 몽고디비에 업로드된 이미지를 참조하는 ID
     @Column(name = "profile_image_id")
     private String profileImageId;
 
-    // 사용자의 역할 (권한) 정보를 저장합니다.
+    // 멤버를 조회시 roleSet 를 같이 조회를 하기.
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();

@@ -4,7 +4,7 @@ document.getElementById("imageInput").addEventListener("change", function() {
     if (file) {
         // 이미지 미리보기 기능
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             document.getElementById("previewImage").src = e.target.result;
         }
         reader.readAsDataURL(file);
